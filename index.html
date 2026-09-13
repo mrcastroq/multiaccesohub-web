@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MultiAcceso Hub | Catálogo</title>
+    <title>MultiAcceso Hub | Catálogo Oficial</title>
     <style>
         :root {
             --bg-color: #0f1016;
@@ -113,6 +113,13 @@
             margin-bottom: 20px;
             line-height: 1.4;
         }
+        .garantia-tag {
+            font-size: 0.8rem;
+            color: #fdcb6e;
+            margin-bottom: 12px;
+            display: block;
+            font-weight: 600;
+        }
         .cta-button {
             display: block;
             text-align: center;
@@ -152,13 +159,13 @@
         <nav>
             <a href="#">Inicio</a>
             <a href="#catalogo">Catálogo</a>
-            <a href="#" style="color: #fd79a8;">¿Eres Revendedor?</a>
+            <a href="https://wa.me/51928353023?text=Hola,%20vengo%20de%20la%20web%20y%20quiero%20información%20sobre%20precios%20para%20revendedores." target="_blank" style="color: #fd79a8;">¿Eres Revendedor?</a>
         </nav>
     </header>
 
     <div class="hero">
-        <h1 id="hero-title">Cuentas Premium al Mejor Precio</h1>
-        <p id="hero-subtitle">Catálogo oficial con entrega inmediata y garantía.</p>
+        <h1>Cuentas Premium al Mejor Precio</h1>
+        <p>Catálogo oficial con entrega inmediata y garantía.</p>
     </div>
 
     <div class="catalogo-container" id="catalogo">
@@ -183,11 +190,11 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        const tasaCambioDolar = 3.80; // Puedes cambiar la tasa aquí o ajustarla cuando gustes
-        const telefonoWhatsApp = "51999999999"; // Pon tu número de WhatsApp real con código de país (ej: 51 para Perú)
+        const tasaCambioDolar = 3.80; 
+        const telefonoWhatsApp = "51928353023"; 
         
         const waUrlBase = "https://wa.me/" + telefonoWhatsApp + "?text=";
-        document.getElementById('wa-button').href = waUrlBase + encodeURIComponent("Hola, me interesa comprar una cuenta.");
+        document.getElementById('wa-button').href = waUrlBase + encodeURIComponent("Hola MultiAcceso Hub, vengo de la web y quiero más información sobre sus servicios.");
 
         async function cargarCatalogoPublico() {
             const querySnapshot = await getDocs(collection(db, "productos"));
@@ -206,12 +213,20 @@
                 let precioSolesBruto = prod.precioUSD * tasaCambioDolar;
                 let precioSolesFinal = Math.ceil(precioSolesBruto * 2) / 2;
 
-                let waMensaje = waUrlBase + encodeURIComponent(`Hola, quiero comprar ${prod.nombre} (${prod.duracion}) por S/ ${precioSolesFinal.toFixed(2)}`);
+                // Mensaje inteligente según el tipo de entrega
+                let mensajeWhatsApp = "";
+                if (prod.tipoEntrega === "invitacion") {
+                    mensajeWhatsApp = waUrlBase + encodeURIComponent(`Hola MultiAcceso Hub, vengo de la web y estoy interesado en ${prod.nombre} (${prod.duracion}) por S/ ${precioSolesFinal.toFixed(2)}. Mi correo para la invitación es: `);
+                } else {
+                    mensajeWhatsApp = waUrlBase + encodeURIComponent(`Hola MultiAcceso Hub, vengo de la web y quiero comprar ${prod.nombre} (${prod.duracion}) por S/ ${precioSolesFinal.toFixed(2)}.`);
+                }
+
+                let garantiaHTML = prod.garantia ? `<span class="garantia-tag">🛡️ ${prod.garantia}</span>` : '';
 
                 let card = `
                 <div class="product-card">
                     <div class="card-image-wrapper">
-                        <div class="badge">🛡️ ${prod.duracion || 'Garantizado'}</div>
+                        <div class="badge">${prod.duracion || 'Disponible'}</div>
                         <img src="${prod.imagenFondo || 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d'}" alt="${prod.nombre}" class="main-bg">
                         <img src="${prod.logoApp || 'https://via.placeholder.com/150'}" alt="Logo" class="logo-app">
                     </div>
@@ -223,8 +238,9 @@
                                 <div style="font-size: 1.1rem; color: #00d2d3; font-weight: 800;">S/ ${precioSolesFinal.toFixed(2)}</div>
                             </div>
                         </h2>
+                        ${garantiaHTML}
                         <p class="subtitle">${prod.descripcion || ''}</p>
-                        <a href="${waMensaje}" target="_blank" class="cta-button">Comprar por WhatsApp</a>
+                        <a href="${mensajeWhatsApp}" target="_blank" class="cta-button">Comprar por WhatsApp</a>
                     </div>
                 </div>`;
                 catalogo.innerHTML += card;
