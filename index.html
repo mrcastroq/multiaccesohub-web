@@ -38,29 +38,38 @@
         document.getElementById('hero-title').innerText = CONFIG.tituloPrincipal;
         document.getElementById('hero-subtitle').innerText = CONFIG.subtitulo;
         
-        const waUrl = "https://wa.me/" + CONFIG.telefonoWhatsApp + "?text=" + encodeURIComponent(CONFIG.mensajeWhatsApp);
+        const waUrl = "https://wa.me/" + CONFIG.telefonoWhatsApp + "?text=" + encodeURIComponent("Hola, me interesa comprar una cuenta.");
         document.getElementById('wa-button').href = waUrl;
 
         const catalogo = document.getElementById('catalogo');
+        
         CONFIG.productos.forEach(prod => {
+            // LÓGICA DE CONVERSIÓN Y REDONDEO A FAVOR
+            let precioSolesBruto = prod.precioUSD * CONFIG.tasaCambioDolar;
+            // Math.ceil(x * 2) / 2 redondea siempre hacia arriba al 0.50 más cercano
+            let precioSolesFinal = Math.ceil(precioSolesBruto * 2) / 2; 
+
             let beneficiosHTML = prod.beneficios.map(b => `<li><span>${b.icono}</span> <span style="margin-left: 10px;">${b.texto}</span></li>`).join('');
             
             let card = `
             <div class="product-card">
                 <div class="card-image-wrapper">
-                    <div class="badge">🛡️ ${prod.garantia}</div>
-                    <img src="${prod.imagenFondo}" alt="${prod.nombre}" class="main-bg">
-                    <img src="${prod.logoApp}" alt="Logo" class="logo-app">
+                    <div class="badge">🛡️ ${prod.duracion}</div>
+                    <img src="${prod.imagenFondo}" alt="${prod.nombre}" class="main-bg" onerror="this.src='https://via.placeholder.com/800x400?text=Fondo+no+encontrado'">
+                    <img src="${prod.logoApp}" alt="Logo" class="logo-app" onerror="this.src='https://via.placeholder.com/150?text=Logo'">
                     <div class="image-overlay"></div>
                 </div>
                 <div class="card-content">
-                    <h2 class="title" style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2 class="title" style="display: flex; justify-content: space-between; align-items: center; font-size: 1.2rem;">
                         ${prod.nombre} 
-                        <span style="font-size: 1.1rem; color: #00d2d3; background: rgba(0, 210, 211, 0.1); padding: 4px 10px; border-radius: 8px;">${prod.precio}</span>
-                     </h2>
+                        <div style="text-align: right;">
+                            <div style="font-size: 0.8rem; color: #b2bec3;">$${prod.precioUSD.toFixed(2)} USD</div>
+                            <div style="font-size: 1.1rem; color: #00d2d3; font-weight: 800;">S/ ${precioSolesFinal.toFixed(2)}</div>
+                        </div>
+                    </h2>
                     <p class="subtitle">${prod.descripcion}</p>
                     <ul class="features">${beneficiosHTML}</ul>
-                    <a href="${waUrl}" target="_blank" class="cta-button">¡Lo quiero ahora!</a>
+                    <a href="${waUrl}" target="_blank" class="cta-button">Comprar por WhatsApp</a>
                 </div>
             </div>`;
             catalogo.innerHTML += card;
