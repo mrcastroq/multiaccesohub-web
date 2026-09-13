@@ -14,7 +14,7 @@
         <nav>
             <a href="#">Inicio</a>
             <a href="#catalogo">Catálogo</a>
-            <a href="#">Garantías</a>
+            <a href="#" style="color: #fd79a8; font-weight: 800;">¿Eres Revendedor?</a>
         </nav>
     </header>
 
@@ -54,7 +54,10 @@
                     <div class="image-overlay"></div>
                 </div>
                 <div class="card-content">
-                    <h2 class="title">${prod.nombre}</h2>
+                    <h2 class="title" style="display: flex; justify-content: space-between; align-items: center;">
+                        ${prod.nombre} 
+                        <span style="font-size: 1.1rem; color: #00d2d3; background: rgba(0, 210, 211, 0.1); padding: 4px 10px; border-radius: 8px;">${prod.precio}</span>
+                     </h2>
                     <p class="subtitle">${prod.descripcion}</p>
                     <ul class="features">${beneficiosHTML}</ul>
                     <a href="${waUrl}" target="_blank" class="cta-button">¡Lo quiero ahora!</a>
