@@ -23,6 +23,24 @@ const CONFIG = {
                 "texto": "Entrega Inmediata"
             }
         ]
+    },
+    {
+        "nombre": "CAPCUT PRO",
+        "duracion": "30",
+        "precioUSD": 3,
+        "descripcion": "🎬 CapCut Pro - Edición Creador (1 Mes)\n\n✨ Todo Desbloqueado: Acceso ilimitado a plantillas, efectos y transiciones Premium.\n🚫 Sin Marca de Agua: Exporta tus videos 100% limpios y profesionales.\n🤖 Poder IA: Eliminación de fondo automática, retoque corporal y subtítulos dinámicos.\n📺 Calidad Máxima: Exportación en 4K y HDR sin restricciones.\n\n📦 Se entrega: Cuenta con suscripción Pro activa lista para usar.",
+        "imagenFondo": "https://tse1.mm.bing.net/th/id/OIP.WXO1n6eA5WjNJwvXRt8-swHaEK?rs=1&pid=ImgDetMain&o=7&rm=3",
+        "logoApp": "https://tse1.mm.bing.net/th/id/OIP.WXO1n6eA5WjNJwvXRt8-swHaEK?rs=1&pid=ImgDetMain&o=7&rm=3",
+        "beneficios": [
+            {
+                "icono": "✅",
+                "texto": "Garantía Total"
+            },
+            {
+                "icono": "⚡",
+                "texto": "Entrega Inmediata"
+            }
+        ]
     }
 ]
 };
