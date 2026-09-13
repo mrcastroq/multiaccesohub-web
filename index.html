@@ -43,11 +43,17 @@
 
         const catalogo = document.getElementById('catalogo');
         
+        function formatearNombreArchivo(nombre) {
+            return nombre.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+        }
+
         CONFIG.productos.forEach(prod => {
-            // LÓGICA DE CONVERSIÓN Y REDONDEO A FAVOR
             let precioSolesBruto = prod.precioUSD * CONFIG.tasaCambioDolar;
-            // Math.ceil(x * 2) / 2 redondea siempre hacia arriba al 0.50 más cercano
             let precioSolesFinal = Math.ceil(precioSolesBruto * 2) / 2; 
+
+            let nombreArchivo = formatearNombreArchivo(prod.nombre);
+            let imgFondo = `LOGOS/PRODUCTOS/fondo-${nombreArchivo}.jpg`;
+            let imgLogo = `LOGOS/PRODUCTOS/logo-${nombreArchivo}.png`;
 
             let beneficiosHTML = prod.beneficios.map(b => `<li><span>${b.icono}</span> <span style="margin-left: 10px;">${b.texto}</span></li>`).join('');
             
@@ -55,8 +61,8 @@
             <div class="product-card">
                 <div class="card-image-wrapper">
                     <div class="badge">🛡️ ${prod.duracion}</div>
-                    <img src="${prod.imagenFondo}" alt="${prod.nombre}" class="main-bg" onerror="this.src='https://via.placeholder.com/800x400?text=Fondo+no+encontrado'">
-                    <img src="${prod.logoApp}" alt="Logo" class="logo-app" onerror="this.src='https://via.placeholder.com/150?text=Logo'">
+                    <img src="${imgFondo}" alt="${prod.nombre}" class="main-bg" onerror="this.onerror=null; this.src='https://placehold.co/800x400/2d2d3a/FFF?text=Falta+Fondo';">
+                    <img src="${imgLogo}" alt="Logo" class="logo-app" onerror="this.onerror=null; this.src='https://placehold.co/150x150/2d2d3a/FFF?text=Logo';">
                     <div class="image-overlay"></div>
                 </div>
                 <div class="card-content">
