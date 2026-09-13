@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Catálogo Premium</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo" id="logo-text"></a>
+        <nav>
+            <a href="#">Inicio</a>
+            <a href="#catalogo">Catálogo</a>
+            <a href="#">Garantías</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1 id="hero-title"></h1>
+        <p id="hero-subtitle"></p>
+    </section>
+
+    <!-- Aquí se inyectarán las tarjetas de productos automáticamente -->
+    <main id="catalogo" class="catalog-container"></main>
+
+    <a href="#" class="whatsapp-float" id="wa-button" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Lógica de construcción (Lee los datos y arma el HTML) -->
+    <script src="config.js"></script>
+    <script>
+        document.title = CONFIG.marca + " " + CONFIG.marcaResaltado + " | Catálogo";
+        document.getElementById('logo-text').innerHTML = CONFIG.marca + ' <span>' + CONFIG.marcaResaltado + '</span>';
+        document.getElementById('hero-title').innerText = CONFIG.tituloPrincipal;
+        document.getElementById('hero-subtitle').innerText = CONFIG.subtitulo;
+        
+        const waUrl = "https://wa.me/" + CONFIG.telefonoWhatsApp + "?text=" + encodeURIComponent(CONFIG.mensajeWhatsApp);
+        document.getElementById('wa-button').href = waUrl;
+
+        const catalogo = document.getElementById('catalogo');
+        CONFIG.productos.forEach(prod => {
+            let beneficiosHTML = prod.beneficios.map(b => `<li><span>${b.icono}</span> <span style="margin-left: 10px;">${b.texto}</span></li>`).join('');
+            
+            let card = `
+            <div class="product-card">
+                <div class="card-image-wrapper">
+                    <div class="badge">🛡️ ${prod.garantia}</div>
+                    <img src="${prod.imagenFondo}" alt="${prod.nombre}" class="main-bg">
+                    <img src="${prod.logoApp}" alt="Logo" class="logo-app">
+                    <div class="image-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <h2 class="title">${prod.nombre}</h2>
+                    <p class="subtitle">${prod.descripcion}</p>
+                    <ul class="features">${beneficiosHTML}</ul>
+                    <a href="${waUrl}" target="_blank" class="cta-button">¡Lo quiero ahora!</a>
+                </div>
+            </div>`;
+            catalogo.innerHTML += card;
+        });
+    </script>
+</body>
+</html>
