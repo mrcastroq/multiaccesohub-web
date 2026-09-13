@@ -3,83 +3,235 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="page-title">Catálogo Premium</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <title>MultiAcceso Hub | Catálogo</title>
+    <style>
+        :root {
+            --bg-color: #0f1016;
+            --card-bg: rgba(25, 26, 38, 0.7);
+            --accent: #00d2d3;
+            --text-main: #ffffff;
+            --text-sub: #b2bec3;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(15, 16, 22, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo { font-size: 1.5rem; font-weight: 800; color: white; }
+        .logo span { color: var(--accent); }
+        nav a { color: white; text-decoration: none; margin-left: 20px; font-weight: 600; font-size: 0.95rem; }
+        nav a:hover { color: var(--accent); }
+        
+        .hero {
+            text-align: center;
+            padding: 60px 20px 30px;
+        }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .hero p { color: var(--text-sub); font-size: 1.1rem; }
+
+        .catalogo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+        .product-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 210, 211, 0.15);
+        }
+        .card-image-wrapper {
+            position: relative;
+            height: 180px;
+            background: #222;
+        }
+        .main-bg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .logo-app {
+            position: absolute;
+            bottom: -15px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            border: 3px solid #191a26;
+            background: white;
+            object-fit: cover;
+        }
+        .badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0, 210, 211, 0.2);
+            color: var(--accent);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border: 1px solid var(--accent);
+        }
+        .card-content {
+            padding: 25px 20px 20px;
+        }
+        .title {
+            font-size: 1.2rem;
+            margin: 0 0 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .subtitle {
+            color: var(--text-sub);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+        .cta-button {
+            display: block;
+            text-align: center;
+            background: #00d2d3;
+            color: #0f1016;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .cta-button:hover { background: #01a3a4; color: white; }
+        
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25d366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            z-index: 1000;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
 
     <header>
-        <a href="#" class="logo" id="logo-text"></a>
+        <div class="logo">MultiAcceso <span>Hub</span></div>
         <nav>
             <a href="#">Inicio</a>
             <a href="#catalogo">Catálogo</a>
-            <a href="#" style="color: #fd79a8; font-weight: 800;">¿Eres Revendedor?</a>
+            <a href="#" style="color: #fd79a8;">¿Eres Revendedor?</a>
         </nav>
     </header>
 
-    <section class="hero">
-        <h1 id="hero-title"></h1>
-        <p id="hero-subtitle"></p>
-    </section>
+    <div class="hero">
+        <h1 id="hero-title">Cuentas Premium al Mejor Precio</h1>
+        <p id="hero-subtitle">Catálogo oficial con entrega inmediata y garantía.</p>
+    </div>
 
-    <!-- Aquí se inyectarán las tarjetas de productos automáticamente -->
-    <main id="catalogo" class="catalog-container"></main>
+    <div class="catalogo-container" id="catalogo">
+        <p style="text-align: center; color: #b2bec3; grid-column: 1 / -1;">Cargando productos en tiempo real...</p>
+    </div>
 
-    <a href="#" class="whatsapp-float" id="wa-button" target="_blank">
-        <i class="fab fa-whatsapp"></i>
-    </a>
+    <a href="#" id="wa-button" target="_blank" class="whatsapp-float">💬</a>
 
-    <!-- Lógica de construcción (Lee los datos y arma el HTML) -->
-    <script src="config.js"></script>
-    <script>
-        document.title = CONFIG.marca + " " + CONFIG.marcaResaltado + " | Catálogo";
-        document.getElementById('logo-text').innerHTML = CONFIG.marca + ' <span>' + CONFIG.marcaResaltado + '</span>';
-        document.getElementById('hero-title').innerText = CONFIG.tituloPrincipal;
-        document.getElementById('hero-subtitle').innerText = CONFIG.subtitulo;
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyAB8US1SzRNLKdrS13HdDtdu06lkfSC_oc",
+          authDomain: "multiaccesohub-4c22f.firebaseapp.com",
+          projectId: "multiaccesohub-4c22f",
+          storageBucket: "multiaccesohub-4c22f.firebasestorage.app",
+          messagingSenderId: "125766749639",
+          appId: "1:125766749639:web:efc7f5baee812fa8845de2"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const tasaCambioDolar = 3.80; // Puedes cambiar la tasa aquí o ajustarla cuando gustes
+        const telefonoWhatsApp = "51999999999"; // Pon tu número de WhatsApp real con código de país (ej: 51 para Perú)
         
-        const waUrl = "https://wa.me/" + CONFIG.telefonoWhatsApp + "?text=" + encodeURIComponent("Hola, me interesa comprar una cuenta.");
-        document.getElementById('wa-button').href = waUrl;
+        const waUrlBase = "https://wa.me/" + telefonoWhatsApp + "?text=";
+        document.getElementById('wa-button').href = waUrlBase + encodeURIComponent("Hola, me interesa comprar una cuenta.");
 
-        const catalogo = document.getElementById('catalogo');
-        
-        function formatearNombreArchivo(nombre) {
-            return nombre.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+        async function cargarCatalogoPublico() {
+            const querySnapshot = await getDocs(collection(db, "productos"));
+            const catalogo = document.getElementById('catalogo');
+            catalogo.innerHTML = '';
+
+            if (querySnapshot.empty) {
+                catalogo.innerHTML = '<p style="text-align: center; color: #b2bec3; grid-column: 1 / -1;">No hay productos disponibles por el momento.</p>';
+                return;
+            }
+
+            querySnapshot.forEach((docSnap) => {
+                const prod = docSnap.data();
+                
+                // Lógica matemática de conversión y redondeo hacia arriba al 0.50 a favor
+                let precioSolesBruto = prod.precioUSD * tasaCambioDolar;
+                let precioSolesFinal = Math.ceil(precioSolesBruto * 2) / 2;
+
+                let waMensaje = waUrlBase + encodeURIComponent(`Hola, quiero comprar ${prod.nombre} (${prod.duracion}) por S/ ${precioSolesFinal.toFixed(2)}`);
+
+                let card = `
+                <div class="product-card">
+                    <div class="card-image-wrapper">
+                        <div class="badge">🛡️ ${prod.duracion || 'Garantizado'}</div>
+                        <img src="${prod.imagenFondo || 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d'}" alt="${prod.nombre}" class="main-bg">
+                        <img src="${prod.logoApp || 'https://via.placeholder.com/150'}" alt="Logo" class="logo-app">
+                    </div>
+                    <div class="card-content">
+                        <h2 class="title">
+                            ${prod.nombre} 
+                            <div style="text-align: right;">
+                                <div style="font-size: 0.75rem; color: #b2bec3;">$${prod.precioUSD.toFixed(2)} USD</div>
+                                <div style="font-size: 1.1rem; color: #00d2d3; font-weight: 800;">S/ ${precioSolesFinal.toFixed(2)}</div>
+                            </div>
+                        </h2>
+                        <p class="subtitle">${prod.descripcion || ''}</p>
+                        <a href="${waMensaje}" target="_blank" class="cta-button">Comprar por WhatsApp</a>
+                    </div>
+                </div>`;
+                catalogo.innerHTML += card;
+            });
         }
 
-        CONFIG.productos.forEach(prod => {
-            let precioSolesBruto = prod.precioUSD * CONFIG.tasaCambioDolar;
-            let precioSolesFinal = Math.ceil(precioSolesBruto * 2) / 2; 
-
-            let nombreArchivo = formatearNombreArchivo(prod.nombre);
-            let imgFondo = `LOGOS/PRODUCTOS/fondo-${nombreArchivo}.jpg`;
-            let imgLogo = `LOGOS/PRODUCTOS/logo-${nombreArchivo}.png`;
-
-            let beneficiosHTML = prod.beneficios.map(b => `<li><span>${b.icono}</span> <span style="margin-left: 10px;">${b.texto}</span></li>`).join('');
-            
-            let card = `
-            <div class="product-card">
-                <div class="card-image-wrapper">
-                    <div class="badge">🛡️ ${prod.duracion}</div>
-                    <img src="${imgFondo}" alt="${prod.nombre}" class="main-bg" onerror="this.onerror=null; this.src='https://placehold.co/800x400/2d2d3a/FFF?text=Falta+Fondo';">
-                    <img src="${imgLogo}" alt="Logo" class="logo-app" onerror="this.onerror=null; this.src='https://placehold.co/150x150/2d2d3a/FFF?text=Logo';">
-                    <div class="image-overlay"></div>
-                </div>
-                <div class="card-content">
-                    <h2 class="title" style="display: flex; justify-content: space-between; align-items: center; font-size: 1.2rem;">
-                        ${prod.nombre} 
-                        <div style="text-align: right;">
-                            <div style="font-size: 0.8rem; color: #b2bec3;">$${prod.precioUSD.toFixed(2)} USD</div>
-                            <div style="font-size: 1.1rem; color: #00d2d3; font-weight: 800;">S/ ${precioSolesFinal.toFixed(2)}</div>
-                        </div>
-                    </h2>
-                    <p class="subtitle">${prod.descripcion}</p>
-                    <ul class="features">${beneficiosHTML}</ul>
-                    <a href="${waUrl}" target="_blank" class="cta-button">Comprar por WhatsApp</a>
-                </div>
-            </div>`;
-            catalogo.innerHTML += card;
-        });
+        cargarCatalogoPublico();
     </script>
 </body>
 </html>
